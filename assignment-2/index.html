@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Doug Doner | Web 150 assignment 2 test</title>
+	</head>
+
+	
+	<body>
+		<script>
+			var enterGate = confirm("You are in a dark sewer tunnel, and before you sits an unlocked gate. Press okay if you wish to open the gate and continue on. If not, press cancel.");
+
+				if (enterGate) {
+					var doorChoice = prompt("You have successfully opened the gate. you walk down a dimly lit hallway lined with stone bricks. The hallway opens up into a small room with three doors. Which door do you choose?");
+					if (doorChoice == 1) {
+						console.log("Unfortunately for you, the door you have chosen is the back side of a rather large bear. You've managed to wake him up, and he looks rather hungry and angry. Let's toast to your good health. THE END");
+					}	else if (doorChoice == 2) {
+							var correctDoor = confirm("You open door number two, and what lies beyond that door? Another door. Wow, how original. There's also a button on the wall next to the door. Press okay to walk through this last door, or cancel to push the button. No pressure.");
+							if (correctDoor) {
+								console.log("Your cold and damp hand reaches for the cold and damp door knob, and so you have a hard time opening it. But still you do manage to turn the door knob. You walk through the door, and just on the other side of the door frame you are almost blinded by the light of a thousand flash bulbs. You are greeted by the mayor of your town, and you are given a check for a hundred million dollars. Congratulations, you won life because of your weird attraction to sewers. THE END");
+							}	else {
+									console.log("Your shaking hand reaches for the door knob, but someone inside of your head yells out \"Don't do it! Push the button!\". Being a highly impressionable person, you opt for the button. The floor opens up from under you, and you fall into a pit of giant lobsters. I will leave that to your imagination. THE END");
+							}
+					}	else if (doorChoice == 3) {
+							var ghostDoor = confirm("You open door number three, and as it slowly creeks open, as an old door should, you begin to smell a faint smell of regret. You walk into the smaller room, and find nothing but a small stool with what looks like a note perched on top of it. You pick up the note, and you almost reel back as you read the words 'YOU WERE A GHOST THE WHOLE TIME' *Queue Inception sound*. Press okay to accept your existance, or cancel to receive 'the kick' ");
+							if (ghostDoor) {
+								console.log("You accept your fate as a spectre of the after-life, and you are trapped in this room until a young psychic needs your guidance in coming to terms with their special ability. THE END");
+							}	else {
+									console.log("You wake up in a bath tub full of water, and your 'dream team' awaits you with a fresh set of clothing and the briefing documents for your next mission. Good job, you made it out with your life, and most of all your sanity. THE END");
+							}
+					}	else {
+							console.log("Since you are indeed a robot programmed explicitly to open doors, refusing to do so has caused a short-circuit, rendering you useless. You weren't really useful in the first place. THE END");
+					}
+				}	else {
+				console.log ("So I see that you like to loiter in underground viaducts. Good luck, and God speed.");
+				}
+		</script>
+	
+	</body>
+</html>
