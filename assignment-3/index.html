@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Web 150 | Assignment 3</title>
+  </head>
+  
+  <body>
+  
+    <script src="http://thomaswilburn.net/sccc/data/expenditures.js"></script>
+    
+    <script>
+    
+      // variables for country that has the highest percentage of military spending in relation to their GDP
+      var mostMoney = 0;
+      var biggestSpender = {};
+      
+      // variables for country that has the lowest percentage of military spending in relation to their GDP
+      var leastMoney = Infinity;
+      var smallestSpender = {};
+      
+      // variables for the average military spending percentage among the countries listed
+      var spendingTotal = 0;
+      var countryCount = 0;
+      
+      //variables to count how many countries spend over 5%, and for countries that spend less than 1%
+      var overFive = 0;
+      var underOne = 0;
+      
+      //variables to count the total percentages spent by just North American Countries, as well as the Total average of countries excluding North American countries
+      var northAmericaTotal = 0;
+      var otherCountriesTotal = 0;
+      var otherCountriesCount = 0;
+      
+      for (var i = 0; i < expenditures.length; i++) {
+        //remember to convert string to number for number comparisons, as the numbers are in strings for this file
+        var currentSpender = expenditures[i];
+        var moneySpent = Number(currentSpender.amount);
+        if (moneySpent > mostMoney) { //if the currentSpender.amount is larger than the value of mostMoney, then the biggestSpender object is equal to the currentSpender object. Also, the value of mostMoney becomes equal to currentSpender.amount, so that the loop can keep track of the largest number.
+          biggestSpender = currentSpender;
+          mostMoney = moneySpent;
+        }
+        
+        if (moneySpent < leastMoney) { //if the currentSpender.amount value is smaller than the value of leastMoney, then the smallestSpender object is equal to the currentSpender object. Also, the value of leastMoney becomes equal to the currentSpender.amount, so that the loop can keep track of the smallest number.
+          smallestSpender = currentSpender;
+          leastMoney = moneySpent;
+        }
+        
+        // if the value of the currentSpender.amount is greater than 5, then the overFive variable adds one to the counter. This is used to keep track of how many countries spend more than 5 percent of their GDP on military.
+        if (moneySpent > 5) {
+          overFive++;
+        }
+        // if the value of the currenSpender.amount is less than 1, then the underOne variable adds one to itself. This is used to keep track of how many countries spend less than 1 percent of their GDP on military.
+        if (moneySpent < 1) {
+          underOne++;
+        }
+        
+        //An if else statement could have been used here to evaluate if currentSpender.country is equal to the string values of united states, canada or mexico, then the northAmericanTotal variable adds its current value and the currentSpender.amount value to itself.
+        switch(currentSpender.country) {
+          case "United States":
+          case "Mexico":
+          case "Canada":
+            northAmericaTotal += moneySpent;
+          break;
+          //This is used to catch all the other values from every country except for the North American countries, and add their values into a running total with the otherCountriesTotal variable.
+          default:
+            otherCountriesTotal += moneySpent;
+            otherCountriesCount++;
+          break;
+            
+        }
+        //spendingTotal catches the currentSpender.amount value from each object that passes through the loop, and the countryCount variable adds 1 to itself for every time the loop is run to count how many countries are in the object.
+        spendingTotal += moneySpent;
+        
+        countryCount++;
+      }
+      
+      console.log("The country that spent the largest percentage of their GDP on military: " + biggestSpender.country);
+      
+      console.log("The country that spent the smallest percentage of their GDP on military: " + smallestSpender.country);
+      
+      console.log("The average percentage of military spending in relation to a country's GDP, among all listed countries: " + (spendingTotal / countryCount) + "%");
+      
+      console.log("Countries that spent more than 5% of their GDP on military: " + overFive);
+      
+      console.log("Countires that spent less than 1% of their GDP on military: " + underOne);
+      
+      console.log("The percentage of GDP spent on military, averaged between the United States, Canada, and Mexico: " + (northAmericaTotal / 3) + "%");
+      
+      console.log("If we exclude the North American continent, the average military spending in relation to GDP for the other countires changes by: " + ((spendingTotal / countryCount) - (otherCountriesTotal / otherCountriesCount)) + "%");
+      
+    </script>
+  </body>
+</html>
