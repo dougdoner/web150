@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Web 150 | assignment 5</title>
+  
+  <style>
+  
+    a img {
+    border:0;
+    }
+    
+    /* to get rid of the margin-bottom on the images */
+    img {
+    display:block;
+    }
+    
+    body, body * {
+      padding:0;
+      margin:0;
+    }
+    
+    .slidewindow {
+      height:400px;
+      width:400px;
+      margin:20px auto 0 auto;
+    }
+    
+    .button-container {
+      width:185px;
+      margin:20px auto 0 auto;
+    }
+    
+    .button-container li {
+      height:50px;
+      width:50px;
+      display:inline-block;
+      margin-right:5px;
+    }
+    
+    .button-container img {
+      height:50px;
+      width:50px;
+    }
+    
+    .activelink {
+      border:2px solid black;
+    }
+  </style>
+</head>
+<body>
+  <div class="slidewindow" id="slideone"><img src="images/slide1.jpg" alt="slide one" /></div>
+  <div class="slidewindow" id="slidetwo"><img src="images/slide2.jpg" alt="slide two" /></div>
+  <div class="slidewindow" id="slidethree"><img src="images/slide3.jpg" alt="slide three" /></div>
+  
+  <ul class="button-container">
+  
+    <li><a href="#slideone"><img src="images/buttonone.jpg" alt="button one" /></a></li>
+    
+    <li><a href="#slidetwo"><img src="images/buttontwo.jpg" alt="button two" /></a></li>
+    
+    <li><a href="#slidethree"><img src="images/buttonthree.jpg" alt="button three" /></a></li>
+    
+  </ul>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  
+  <script>
+    //selects all of the anchor tags in the buttons section of the document
+    var buttonLinks = $('.button-container a');
+    //on-click listener with function
+    buttonLinks.on('click', function(e) {
+      //hides any class of slidewindow that is visible
+      $('.slidewindow:visible').hide();
+      //selects this and changes it to jQuery version of this
+      var $this = $(this);
+      //stores the href attribute of the clicked element
+      var link = $this.attr('href');
+      //creates a variable to wrap the href attribute in jQuery
+      var slide = $(link);
+      //tells any selector that matches the $(link) selector to show
+      slide.fadeIn(1000);
+      //removes activelink class from any element with class of activelink
+      $(".activelink").removeClass("activelink");
+      //selects the closest li element, in this case its own li element
+      var li = $this.closest('li');
+      //adds an active class to the li element containing the anchor tag
+      li.addClass('activelink');
+      //prevents the default navigation to the window associated with the href
+      e.preventDefault();
+    });
+    
+    buttonLinks.filter(":first").click();
+  </script>
+</body>
+</html>
