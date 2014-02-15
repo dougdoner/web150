@@ -49,10 +49,11 @@
   </style>
 </head>
 <body>
+  <div class="previousbutton"><a href="#">previous</a></div>
   <div class="slidewindow" id="slideone"><img src="images/slide1.jpg" alt="slide one" /></div>
   <div class="slidewindow" id="slidetwo"><img src="images/slide2.jpg" alt="slide two" /></div>
   <div class="slidewindow" id="slidethree"><img src="images/slide3.jpg" alt="slide three" /></div>
-  
+  <div class="nextbutton"><a href="#">next</a></div>
   <ul class="button-container">
   
     <li><a href="#slideone"><img src="images/buttonone.jpg" alt="button one" /></a></li>
@@ -81,8 +82,16 @@
       slide.fadeIn(1000);
       //removes activelink class from any element with class of activelink
       $(".activelink").removeClass("activelink");
+	  $('.nextlink').removeClass('nextlink');
+	  $('.previouslink').removeClass('previouslink');
       //selects the closest li element, in this case its own li element
       var li = $this.closest('li');
+	  //declares a variable that is the next sibling element of the parent li
+	  var next = li.next();
+	  $(next).addClass('nextlink');
+	  //declares a variable that is the previous sibling element of the parent li
+	  var previous = li.prev();
+	  $(previous).addClass('previouslink');
       //adds an active class to the li element containing the anchor tag
       li.addClass('activelink');
       //prevents the default navigation to the window associated with the href
@@ -90,6 +99,55 @@
     });
     
     buttonLinks.filter(":first").click();
+	
+	  $('.nextbutton a').on('click', function(e) {
+	    if ($('.nextlink').length < 1) {
+	      $('.slidewindow:visible').hide();
+	      $('.nextlink').removeClass('nextlink');
+	      $('.activelink').removeClass('activelink');
+		  $('.previouslink').removeClass('previouslink');
+	      var firstLink = $('.button-container li:first-child');
+	      firstLink.addClass('activelink');
+	      var slide = $('.activelink a').attr('href');
+	      $(slide).fadeIn(1000);
+	      var nextLi = firstLink.next('li');
+	      nextLi.addClass('nextlink');
+	    } else {
+	      $('.slidewindow:visible').hide();
+	      var nextLink = $('.nextlink a').attr('href');
+	      $(nextLink).fadeIn(1000);
+	      var newCurrentLink = $('.nextlink').closest('li');
+		  $('.previouslink').removeClass('previouslink');
+		  $('.activelink').addClass('previouslink');
+	      $('.activelink').removeClass('activelink');
+	      newCurrentLink.addClass('activelink');
+	      $('.nextlink').removeClass('nextlink');
+	      var newestCurrentLink = $('.activelink').closest('li');
+	      var newNextLink = newestCurrentLink.next();
+	      newNextLink.addClass('nextlink');
+	    }
+	    e.preventDefault();
+	  });
+	  
+	  $('.previousbutton a').on('click', function(e) {
+	    if ($('.previouslink').length < 1) {
+		  return false;
+		} else {
+		    $('.slidewindow:visible').hide();
+			var previousLink = $('.previouslink a').attr('href');
+			$(previousLink).fadeIn(1000);
+			var newCurrentLink = $('.previouslink').closest('li');
+			$('.nextlink').removeClass('nextlink');
+			$('.activelink').addClass('nextlink');
+			$('.activelink').removeClass('activelink');
+			newCurrentLink.addClass('activelink');
+			$('.previouslink').removeClass('previouslink');
+			var newestCurrentLink = $('.activelink').closest('li');
+			var newPreviousLink = newestCurrentLink.prev();
+			newPreviousLink.addClass('previouslink');
+		e.preventDefault();
+		}
+	  });
   </script>
 </body>
 </html>
