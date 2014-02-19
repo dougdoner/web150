@@ -97,13 +97,11 @@ assert( identity(testFunction) == testFunction(), "(bonus) Identity function sho
 
 var filter = function(data, fn) {
   var processed = [];
-  var trueIndex = 0;
   for (var i = 0; i < data.length; i++) {
     var value = data[i];
     var processer = fn(value);
     if (processer) {
-      processed[trueIndex] = value;
-      trueIndex++;
+      processed.push(value);
     }
   }
   return processed;
