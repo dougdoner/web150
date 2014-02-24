@@ -92,15 +92,6 @@
 	    context.fill();
     }
     
-    //tracking function for npc paddle
-    var paddleBrain = function() {
-      if (ball.x <= paddleTwo.x - 50) {
-        paddleTwo.y = ball.y;
-        context.clearRect(paddleTwo.x, 0, 50, canvas.height);
-        drawPaddleTwo(paddleTwo.x, paddleTwo.y);
-      }
-    }
-    
     var $canvas = $('#canvas');
     
     $(document).keydown(function(e) {
@@ -166,7 +157,7 @@
         ball.y = 200;
       }
       
-      //paddleBrain only tracks the ball while the ball is within a certain x value
+      //paddleTwo only tracks the ball while the ball is within a certain x value
       if (ball.x >= paddleTwo.x - 150) {
         //experimented with changing the movement speed of paddleBrain
         paddleTwo.y = (ball.y - 50) / 1.2;
