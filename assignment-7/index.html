@@ -34,6 +34,10 @@
     //defines short-hand variable for context
     var context = canvas.getContext('2d');
     
+	game = {
+	active: false
+	}
+	
     score = {
     playerOneScore: 0,
     playerTwoScore: 0
@@ -57,7 +61,7 @@
     ball = {
     x: 300,
     y: 200,
-    dx: 2,
+    dx: 4,
     dy : 3
     }
     
@@ -89,7 +93,7 @@
       context.beginPath();
       context.arc(x, y, 20, 0, 2 * Math.PI);
       context.fillStyle = "white";
-	    context.fill();
+context.fill();
     }
     
     var $canvas = $('#canvas');
@@ -110,8 +114,10 @@
       }
     });
     
-    
     $('#startbutton').on('click', function() {
+	 //check state of active game, in place to prevent constant redrawing of ball (which multiplies momentum of ball)
+	 if (!game.active) {
+       game.active = true; 
     var drawFrame = function(e) {
       context.clearRect(0, 0, canvas.width, canvas.height);
       drawBall(ball.x, ball.y);
@@ -127,20 +133,20 @@
       drawPaddles();
       
       /* $canvas.on('mousemove', function(e) {
-        context.clearRect(paddleOne.x, 0, 50, canvas.height);
-        var y = e.pageY;
-        drawPaddleOne(paddleOne.x, y - 50);
-        paddleOne.y = y;
-        //returns new paddleOne.y so that the drawPaddles() function renders paddleOne at the new y value
-        return paddleOne.y;
-      }); */ //uncomment this if you want mouse movement, although a bit buggy
+context.clearRect(paddleOne.x, 0, 50, canvas.height);
+var y = e.pageY;
+drawPaddleOne(paddleOne.x, y - 50);
+paddleOne.y = y;
+//returns new paddleOne.y so that the drawPaddles() function renders paddleOne at the new y value
+return paddleOne.y;
+}); */ //uncomment this if you want mouse movement, although a bit buggy
       
       
-      if ((ball.x >= paddleOne.x - paddleOne.width && ball.x <= paddleOne.x + paddleOne.width) && (ball.y >= paddleOne.y && ball.y <= paddleOne.y + paddleOne.height)) {
+      if ((ball.x >= paddleOne.x && ball.x <= paddleOne.x + paddleOne.width) && (ball.y >= paddleOne.y && ball.y <= paddleOne.y + paddleOne.height)) {
           ball.dx = ball.dx * -1;
       };
       
-      if ((ball.x >= paddleTwo.x - paddleTwo.width && ball.x <= paddleTwo.x + paddleTwo.width) && (ball.y >= paddleTwo.y - 10 && ball.y <= (paddleTwo.y + paddleTwo.height) - 5)) {
+      if ((ball.x >= paddleTwo.x && ball.x <= paddleTwo.x + paddleTwo.width) && (ball.y >= paddleTwo.y - 10 && ball.y <= (paddleTwo.y + paddleTwo.height) - 5)) {
           ball.dx = ball.dx * -1;
       };
       
@@ -157,10 +163,10 @@
         ball.y = 200;
       }
       
-      //paddleTwo only tracks the ball while the ball is within a certain x value
-      if (ball.x >= paddleTwo.x - 150) {
+      //paddleTwo only tracks the ball while the ball is within a certain x value, and outside of certain y values to prevent the paddle moving outside of the frame
+      if (ball.x >= paddleTwo.x - 425 && ball.y <= canvas.height - 20 && ball.y >= 50) {
         //experimented with changing the movement speed of paddleBrain
-        paddleTwo.y = (ball.y - 50) / 1.2;
+        paddleTwo.y = (ball.y - 50) / 1.25;
         context.clearRect(paddleTwo.x, 0, 50, canvas.height);
         drawPaddleTwo(paddleTwo.x, paddleTwo.y);
       }
@@ -177,11 +183,14 @@
         } else if (score.playerTwoScore > score.playerOneScore) {
           context.fillStyle = "white";
           context.font = "30px Comic Sans MS";
-          context.fillText("Player two winner!", 180, 100); 
+          context.fillText("Player two winner!", 180, 100);
         }
       };
     }
       drawFrame();
+	  } else {
+	  return;
+	  }
     });
     
     
