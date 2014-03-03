@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Web 150 | Assignment 8</title>
+  
+  <style>
+    body, body * {
+	  margin: 0;
+	  padding: 0;
+	}
+	
+	a image {
+	  border: 0;
+	}
+	
+	body {
+	  font-family: Tahoma, Verdana, Georgia;
+	  font-size: 100%;
+	}
+	
+	.wrapper {
+	  width:600px;
+	  margin:20px auto;
+	  overflow: hidden;
+	}
+	
+	.buttonwrap {
+	  margin:auto;
+	  width:200px;
+	}
+	
+	p {
+	  text-align:center;
+	}
+	
+	input {
+	  width:200px;
+	}
+	
+	p.answer {
+	  position: absolute;
+	  top:250px;
+	  left: 49%;
+	  font-size: 10px;
+	  color: white;
+	  margin-bottom:10px;
+	  width:40px;
+	}
+
+	img {
+	  padding-top: 20px;
+	  margin: auto;
+	  display: block;
+	  width:400px;
+	}
+  </style>
+</head>
+
+<body>
+  
+  <div class="wrapper">
+    <div class="buttonwrap">
+	
+	<p>Ask a question!</p>
+	
+	<input id="question">
+	
+    </div>
+	<img src="images/magicball.png">
+  </div><!--end wrapper-->
+  
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+  <script>
+	$('#question').keypress(function(e) {
+	  if (e.which == 13) {
+	  console.log('key pressed');
+	  
+	  var jsonp = $.ajax({
+	    url: "http://thomaswilburn.net:8080/magic8",
+	    dataType: "jsonp",
+	    jsonCallback: "magic8"
+	  });
+	
+	  jsonp.done(function(data) {
+	    console.log('success!');
+	    if ($('p.answer').length <= 0) {
+	      var wrapper = $('.wrapper');
+	      var p = $('<p></p>');
+		  p.html(data.answer);
+	      p.attr('class', 'answer'); //experimenting with giving attributes to elements
+		  $('img').fadeOut(1000);
+		  $('img').fadeIn(1000);
+	      wrapper.append(p);
+		  p.hide();
+		  p.fadeIn(3000);
+	    } else {
+	        var p = $('p.answer');
+            $('img').fadeOut(1000);
+		    $('img').fadeIn(1000);
+	        p.html(data.answer);
+			p.hide();
+			p.fadeIn(3000);
+	    }
+	  });
+	
+	jsonp.error(function() {
+	  console.log("error retrieving service");
+	});
+	
+	};
+	}); //end keypress event
+    
+  </script>
+
+</body>
+</html>
