@@ -88,28 +88,29 @@
 	    if ($('p.answer').length <= 0) {
 	      var wrapper = $('.wrapper');
 	      var p = $('<p></p>');
-		  p.html(data.answer);
+              p.html(data.answer);
 	      p.attr('class', 'answer'); //experimenting with giving attributes to elements
-		  $('img').fadeOut(1000);
-		  $('img').fadeIn(1000);
+	      $('img').fadeOut(1000);
+	      $('img').fadeIn(1000);
 	      wrapper.append(p);
-		  p.hide();
-		  p.fadeIn(3000);
+	      p.hide();
+              p.fadeIn(3000);
 	    } else {
 	        var p = $('p.answer');
-            $('img').fadeOut(1000);
-		    $('img').fadeIn(1000);
+                $('img').fadeOut(1000);
+		$('img').fadeIn(1000);
 	        p.html(data.answer);
-			p.hide();
-			p.fadeIn(3000);
+	        p.hide();
+		p.fadeIn(3000);
 	    }
 	  });
 	
-	jsonp.error(function() {
-	  console.log("error retrieving service");
-	});
+	  jsonp.error(function() {
+	    console.log("error retrieving service");
+	  });
 	
-	};
+	  };
+	  
 	}); //end keypress event
     
   </script>
