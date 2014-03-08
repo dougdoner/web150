@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+  <title>Broken Windows</title>
+  <meta charset="utf-8">
+</head>
+<body>
+  <div class="slides">
+    <section>
+      <h1>THIS IS A SLIDE</h1>
+    </section>
+    <section>
+      <h2>Another day, another slide</h2>
+      <ul>
+        <li>Not the first slide</li>
+        <li>Not the last slide</li>
+        <li>Hence: middle slide?</li>
+      </ul>
+    </section>
+    <section>
+      <h2>All good things...</h2>
+      <p>
+        This is the last slide
+      </p>
+    </section>
+  </div>
+  <nav class="slide-controls">
+    <a class="previous">Previous</a>
+    <a class="next">Next</a>
+  </nav>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <script>
+    //Selects the anchor tag inside of .slide-controls class, and creates an on-click event listener
+    $(".slide-controls a").on("click", function() {
+      //wraps this in jQuery so it works with in the jQuery on-click function
+      var $this = $(this);
+      //creates a variable that stores any visible section with a class of slides
+      var current = $(".slides section:visible");
+      //creates an empty variable to be used on the next line
+      var slide;
+      //if the anchor tag clicked has a class of next
+      if ($this.is(".next")) {
+        //if the current variable's next element has a length of 0
+        if (!current.next().length) {
+          //do nothing!
+          return;
+        } else {
+        //the empty slide variable will store the next .slides section
+        slide = current.next();
+        }
+        //in this case, if the anchor clicked does not have a class of next
+      } else {
+        //if the current variable's previous element has a length of 0
+        if (!current.prev().length) {
+          //do nothing!
+          return;
+        } else {
+        //the empty slide variable will store the previous .slides section
+        slide = current.prev();
+        }
+      }
+      // hides any section with a class of slides
+      $(".slides section").hide();
+      //takes the value of slide and fades it in
+      slide.fadeIn();
+    });
+    // any section with a class of slides that isn't the first section will hide (happens whens the page loads, before the on-click event)
+    $(".slides section:not(:first)").hide();
+    </script>
+  <style>
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.slides section {
+  display: block;
+  width: 800px;
+  height: 600px;
+  margin: auto;
+  background: #DDD;
+  background: radial-gradient(white, #DDD);
+  padding: 50px;
+  font-size: 48px;
+}
+.slides section > * {
+  margin: auto;
+  display: block;
+}
+.slides h1, h2 {
+  text-align: center;
+}
+.slides h1 {
+  font-size: 200%;
+}
+.slides h2 {
+  font-size: 150%;
+}
+.slide-controls {
+  text-align: center;
+}
+.slide-controls a {
+  display: inline-block;
+  width: 200px;
+  padding: 20px;
+  background: #AAA;
+}
+  </style>
+</body>
+</html>
