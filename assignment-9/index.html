@@ -30,6 +30,11 @@
   </nav>
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <script>
+  
+    /* The object of this script is to create  a slide-show with interactive buttons below the slide. The buttons "previous" and "next" 
+    will control what slide is visible (each slide is represented by a section). The next and previous anchors buttons will return false if the
+    length of the next or previous slides returns false */
+  
     //Selects the anchor tag inside of .slide-controls class, and creates an on-click event listener
     $(".slide-controls a").on("click", function() {
       //wraps this in jQuery so it works with in the jQuery on-click function
