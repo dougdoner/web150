@@ -95,6 +95,7 @@ button.click(function() {
   //otherwise make it false, so when you click on it again it makes the value false
   } else {
     enableslider = false;
+    $('.testbox').removeClass('slide ui-draggable');
     //it also removes the class of slide from any element on the page
   }
 });
@@ -104,6 +105,7 @@ $('.testbox').on('click drag', function() {
   //if enableslider is false, disable the draggable state
   if (!enableslider) {
     $( ".testbox" ).draggable({ disabled: true });
+    $('.testbox').removeClass('slide ui-draggable');
   } else {
     //otherwise, remove the slide class from any element with the slide class, then add a class of slide to the clicked or dragged element, and make slide class draggable
   var $this = $(this);
