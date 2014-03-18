@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<meta charset="utf-8">
+<title>jQuery UI tutorial</title>
+
+<style>
+
+  body {
+background: -moz-linear-gradient(top,  rgba(221,221,221,0.96) 0%, rgba(221,221,221,0) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(221,221,221,0.96)), color-stop(100%,rgba(221,221,221,0))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  rgba(221,221,221,0.96) 0%,rgba(221,221,221,0) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  rgba(221,221,221,0.96) 0%,rgba(221,221,221,0) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  rgba(221,221,221,0.96) 0%,rgba(221,221,221,0) 100%); /* IE10+ */
+background: linear-gradient(to bottom,  rgba(221,221,221,0.96) 0%,rgba(221,221,221,0) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5dddddd', endColorstr='#00dddddd',GradientType=0 ); /* IE6-9 */
+
+
+background-repeat: no-repeat;
+  }
+  #slider {
+    width: 400px;
+    margin: 10px auto;
+  }
+  
+  .slide {
+    border: 2px solid black;
+  }
+  
+  .testbox {
+    width: 300px;
+    height: 200px;
+    background-color: green;
+    margin-right: 5px;
+    float: left;
+  }
+  
+  .testbox p {
+    text-align: center;
+    margin: 30% auto;
+  }
+  
+  .box-container {
+    width: 960px;
+    margin: 10px auto;
+    height: 600px;
+  }
+</style>
+</head>
+
+<body>
+
+
+<div class="box-container">
+<div class="testbox"><p>Cnn.com</p></div>
+<div class="testbox"><p>Youtube</p></div>
+<div class="testbox"><p>Facebook</p></div>
+</div><!-- end box-container-->
+
+
+<div id="slider"></div>
+
+<button class="enabler">Click to toggle dragging</button>
+
+<p>An attempt to add functionality to the firefox new-tab UI, giving the user the ability to resize and re-arrange their most-used sites</p>
+
+<p>Click and drag boxes around, and use slider to resize the box</p>
+</body>
+
+<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" ></script>
+
+<script>
+
+
+//sets the value of slider to 300, with a minimum value of 300 and max value of 400
+$( "#slider" ).slider({ value: 300, min: 300, max: 400});
+
+//creates a variable with a value of false
+var enableslider = false;
+
+
+//selects any element with a class of 'enabler'
+var button = $('.enabler');
+
+
+//when the button with a class of enabler is clicked
+button.click(function() {
+  //if the value of enableslider is false
+  if (!enableslider) {
+    //make it true
+  enableslider = true;
+  //otherwise make it false, so when you click on it again it makes the value false
+  } else {
+    enableslider = false;
+    //it also removes the class of slide from any element on the page
+  }
+});
+
+//creates a click and drag event listener for any element with a class of testbox, in this case the boxes on the page
+$('.testbox').on('click drag', function() {
+  //if enableslider is false, disable the draggable state
+  if (!enableslider) {
+    $( ".testbox" ).draggable({ disabled: true });
+  } else {
+    //otherwise, remove the slide class from any element with the slide class, then add a class of slide to the clicked or dragged element, and make slide class draggable
+  var $this = $(this);
+  $('.slide').removeClass('slide');
+  $this.addClass('slide');
+  $('.slide').draggable({ containment: "parent", disabled: false })
+  }
+});
+
+//creates a slide event listener for the #slider element
+$('#slider').on('slide', function( event, ui) {
+  //creates a variable that stores the selection of the .slide class
+  var slidebox = $('.slide');
+  //changes the width of the element with the slide class to reflect the value of the slider
+  slidebox.css("width", ui.value);
+  //same as above, but - 100 to compensate for the difference between the height and width value
+  slidebox.css("height", ui.value - 100);
+});
+</script>
+
+</html>
